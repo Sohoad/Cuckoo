@@ -1,0 +1,74 @@
+
+<!-- <div class="btn-group" id="status" data-toggle="buttons">
+        <label class="btn btn-default btn-on btn-sm active" onclick="sideloadStetho()">
+            <input type="radio" value="1" name="stetho_load" checked="checked" id="stetho">Load Stetho</label>
+
+    </div> -->
+<div class="col-md-5">
+    <h3 class="display-4">SideLoad Stetho</h3>
+    <p>
+        Stetho is a
+        <a href="http://facebook.github.io/stetho/" target="_blank">debug bridge for Android applications</a> that I find it to be very useful, House can sideload stethor.jar and inject it into your application for debug purpose. It will only be turned on if you click the button below.
+        <br /><br />
+        <b>Use with caution:</b> It is experimental for now as Stetho requires <code>android.support.v4</code> support, disable Stetho if the app crashes with <code>"java.lang.ClassNotFoundException"</code>.
+    </p>
+    <h4>Here is what you need to do to make it work:</h4>
+    <ul class="list-unstyled">
+        <li>1. Download Stetho <a href="https://github.com/facebook/stetho/releases/download/v1.5.1/stetho-1.5.1-fatjar.jar" target="_blank">stand-alone JAR.</a></li>
+        <li>2. Rename the download to <code>stetho.jar</code>.</li>
+        <li>2.1 Convert the jar file to dex, using tool such as <a href="https://sourceforge.net/projects/dex2jar/">dextojar</a> <code>d2j-jar2dex.sh stetho.jar</code>.</li>
+        <li>3. Push the converted-dex file to the device under this diretory: <code>/data/local/tmp/stetho.jar</code>, e.g. <code>adb push stetho-jar2dex.dex /data/local/tmp/stetho.jar</code>.</li>
+        <li>4. Click the <code>Load</code> button below, note this would restart the application.</li>
+        <li>5. To unload <code>stetho.jar</code>, simply restart the app.</li>
+        <li>6. What's new on <code>chrome://inspect/#devices</code>?</li>
+    </ul>
+
+
+    <h3 class="display-4">SSL Unpinning</h3>
+    <p>
+        Toggle the button on the right-hand side to preload SSL Unpinning frida script. 
+    </p>
+    <h4>Here is what you need to do to make it work:</h4>
+    <ul class="list-unstyled">
+        <li>1. Export your proxy certification, e.g. burpca-cert-der.crt
+        <li>2. Save the cert on the device as: <code>/data/local/tmp/cert-der.crt</code>;<br>
+        E.g. <code>adb push burpca-cert-der.crt /data/local/tmp/cert-der.crt</code>.</li>
+        
+    </ul>
+
+    <h3 class="display-4">Proxy Setting (Current app only)</h3>
+    
+    <p> House support proxy over adb reverse binding, all app traffic will go through 127.0.0.1:8080 on the device;
+
+    run <code>adb reverse tcp:8080 tcp:8080</code> to bind it to the proxy host</p>
+
+</div>
+<div class="col-md-5">
+    <hr>
+    <form class="form-horizontal" role="form">
+        <div class="btn-group">
+            <label class="switch">
+                <input type="checkbox" id="PRELOAD_STETHO">
+                <span class="slider"></span>
+            </label><small class="text-uppercase"><b> Stetho</b></small>
+        </div>
+        <div class="btn-group">
+            <label class="switch">
+                <input type="checkbox" id="PRELOAD_SSLSTRIP" checked>
+                <span class="slider"></span>
+            </label><small class="text-uppercase"><b> SSL Unpinning</b></small>
+        </div>
+        <div class="btn-group">
+            <label class="switch">
+                <input type="checkbox" id="PRELOAD_SETPROXY">
+                <span class="slider"></span>
+            </label><small class="text-uppercase"><b> Set Proxy</b></small>
+        </div>
+    </form>
+    <br>
+    <button class="btn btn-success" onclick="runpreload();">Run Preload</button>
+    <button class="btn btn-danger" onclick="endpreload();">Terminate Preload</button>
+</div>
+
+
+
